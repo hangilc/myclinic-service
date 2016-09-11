@@ -1,0 +1,30 @@
+{
+  "name": "myclinic-service",
+  "version": "1.0.0",
+  "description": "Web interface to myclinic database",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/hangilc/myclinic-service.git"
+  },
+  "author": "Hangil Chang",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hangilc/myclinic-service/issues"
+  },
+  "homepage": "https://github.com/hangilc/myclinic-service#readme",
+  "devDependencies": {
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0"
+  },
+  "dependencies": {
+    "conti": "^1.3.2",
+    "moment": "^2.14.1",
+    "myclinic-consts": "^1.0.0",
+    "myclinic-db": "^0.2.12",
+    "mysql": "^2.11.1"
+  }
+}

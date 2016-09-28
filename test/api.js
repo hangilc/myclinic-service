@@ -16,3 +16,7 @@ exports.enterPatient = function(patient, done){
 exports.listFullPharmaQueue = function(cb){
 	request("list_full_pharma_queue", {}, "GET", cb);
 };
+
+exports.listTodaysVisitsForPharma = function(cb){
+	request("list_todays_visits_for_pharma", {}, "GET", cb);
+};

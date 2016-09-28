@@ -27,7 +27,7 @@
     "conti": "^1.3.2",
     "moment": "^2.14.1",
     "myclinic-consts": "^1.0.0",
-    "mysql": "^2.11.1",
-    "myclinic-db": "^0.2.13"
+    "myclinic-db": "^0.2.14",
+    "mysql": "^2.11.1"
   }
 }

@@ -32,3 +32,9 @@ exports.listVisits = function(patientId, offset, n, cb){
 		n: n
 	}, "GET", cb);
 };
+
+exports.listIyakuhinByPatient = function(patientId, cb){
+	request("list_iyakuhin_by_patient", {
+		patient_id: patientId
+	}, "GET", cb);
+};

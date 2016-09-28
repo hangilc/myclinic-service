@@ -5,6 +5,7 @@ var test = require("./test");
 var conti = require("conti");
 var api = require("./api");
 var db = require("myclinic-db");
+var moment = require("moment");
 
 describe("Testing list_full_pharma_queue", function(){
 	it("empty", function(done){
@@ -70,7 +71,8 @@ describe("Testing list_full_pharma_queue", function(){
 				db.insertPatient(conn, patient, done);
 			},
 			function(done){
-				db.startVisit(conn, patient.patient_id, "2016-09-28 21:04:00", function(err, result){
+				var at = moment().format("YYYY-MM-DD HH:mm:ss");
+				db.startVisit(conn, patient.patient_id, at, function(err, result){
 					if( err ){
 						done(err);
 						return;

@@ -20,3 +20,7 @@ exports.listFullPharmaQueue = function(cb){
 exports.listTodaysVisitsForPharma = function(cb){
 	request("list_todays_visits_for_pharma", {}, "GET", cb);
 };
+
+exports.listDrugs = function(visitId, cb){
+	request("list_drugs", {visit_id: visitId}, "GET", cb);
+};

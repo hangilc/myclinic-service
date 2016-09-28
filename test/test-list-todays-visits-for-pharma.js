@@ -9,12 +9,28 @@ var moment = require("moment");
 
 describe("Testing list_todays_visits_for_pharma", function(){
 	it("empty", function(done){
-		api.listTodaysVisitsForPharma(function(err, result){
+		var conn = test.getConnection();
+		var resultList;
+		conti.exec([
+			function(done){
+				conn.query("truncate table visit", done);
+			},
+			function(done){
+				api.listTodaysVisitsForPharma(function(err, result){
+					if( err ){
+						done(err);
+						return;
+					}
+					resultList = result;
+					done();
+				})
+			}
+		], function(err){
 			if( err ){
 				done(err);
 				return;
 			}
-			expect(result).eql([]);
+			expect(resultList).eql([]);
 			done();
 		})
 	});
@@ -43,10 +59,13 @@ describe("Testing list_todays_visits_for_pharma", function(){
 			valid_from: "2016-04-01",
 			valid_upto: "0000-00-00"
 		};
-		var visitId, resultList;
+		var visitId, resultList, ans;
 		conti.exec([
 			function(done){
-				conn.query("truncate table pharma_queue", done);
+				var tables = ["visit", "iyakuhin_master_arch", "wqueue"];
+				conti.forEach(tables, function(table, done){
+					conn.query("truncate table " + table, done);
+				}, done);
 			},
 			function(done){
 				db.insertPatient(conn, patient, done);
@@ -80,12 +99,22 @@ describe("Testing list_todays_visits_for_pharma", function(){
 				db.endExam(conn, visitId, 0, done);
 			},
 			function(done){
-				api.listFullPharmaQueue(function(err, result){
+				api.listTodaysVisitsForPharma(function(err, result){
 					if( err ){
 						done(err);
 						return;
 					}
 					resultList = result;
+					done();
+				})
+			},
+			function(done){
+				db.listTodaysVisitsForPharma(conn, function(err, result){
+					if( err ){
+						done(err);
+						return;
+					}
+					ans = result;
 					done();
 				})
 			}
@@ -94,16 +123,6 @@ describe("Testing list_todays_visits_for_pharma", function(){
 				done(err);
 				return;
 			}
-			var ans = [{
-				visit_id: visitId,
-				patient_id: patient.patient_id,
-				last_name: patient.last_name,
-				first_name: patient.first_name,
-				last_name_yomi: patient.last_name_yomi,
-				first_name_yomi: patient.first_name_yomi,
-				pharma_state: 0,
-				wait_state: 2
-			}]
 			expect(resultList).eql(ans);
 			done();
 		})

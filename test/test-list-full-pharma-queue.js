@@ -8,14 +8,30 @@ var db = require("myclinic-db");
 
 describe("Testing list_full_pharma_queue", function(){
 	it("empty", function(done){
-		test.request("list_full_pharma_queue", {}, "GET", function(err, result){
+		var conn = test.getConnection();
+		var resultList;
+		conti.exec([
+			function(done){
+				conn.query("truncate table pharma_queue", done);
+			},
+			function(done){
+				api.listFullPharmaQueue(function(err, result){
+					if( err ){
+						done(err);
+						return;
+					}
+					resultList = result;
+					done();
+				})
+			}
+		], function(err){
 			if( err ){
 				done(err);
 				return;
 			}
-			expect(result).eql([]);
+			expect(resultList).eql([]);
 			done();
-		});
+		})
 	});
 
 	it("simple", function(done){
@@ -45,7 +61,10 @@ describe("Testing list_full_pharma_queue", function(){
 		var visitId, resultList;
 		conti.exec([
 			function(done){
-				conn.query("truncate table pharma_queue", done);
+				var tables = ["pharma_queue", "iyakuhin_master_arch"];
+				conti.forEach(tables, function(table, done){
+					conn.query("truncate table " + table, done);
+				}, done);
 			},
 			function(done){
 				db.insertPatient(conn, patient, done);

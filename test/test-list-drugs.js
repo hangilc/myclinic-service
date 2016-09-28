@@ -46,7 +46,10 @@ describe("Testing list_drugs", function(){
 		var visitId, resultList, ans;
 		conti.exec([
 			function(done){
-				conn.query("truncate table pharma_queue", done);
+				var tables = ["pharma_queue", "iyakuhin_master_arch"];
+				conti.forEach(tables, function(table, done){
+					conn.query("truncate table " + table, done);
+				}, done);
 			},
 			function(done){
 				db.insertPatient(conn, patient, done);

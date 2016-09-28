@@ -24,3 +24,11 @@ exports.listTodaysVisitsForPharma = function(cb){
 exports.listDrugs = function(visitId, cb){
 	request("list_drugs", {visit_id: visitId}, "GET", cb);
 };
+
+exports.listVisits = function(patientId, offset, n, cb){
+	request("list_visits", {
+		patient_id: patientId,
+		offset: offset,
+		n: n
+	}, "GET", cb);
+};

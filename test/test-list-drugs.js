@@ -8,13 +8,30 @@ var db = require("myclinic-db");
 var moment = require("moment");
 
 describe("Testing list_drugs", function(){
+
 	it("empty", function(done){
-		api.listDrugs(1, function(err, result){
+		var conn = test.getConnection();
+		var resultList;
+		conti.exec([
+			function(done){
+				conn.query("truncate table visit_drug", done);
+			},
+			function(done){
+				api.listDrugs(1, function(err, result){
+					if( err ){
+						done(err);
+						return;
+					}
+					resultList = result;
+					done();
+				})
+			}
+		], function(err){
 			if( err ){
 				done(err);
 				return;
 			}
-			expect(result).eql([]);
+			expect(resultList).eql([]);
 			done();
 		})
 	});

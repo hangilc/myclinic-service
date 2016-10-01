@@ -38,3 +38,10 @@ exports.listIyakuhinByPatient = function(patientId, cb){
 		patient_id: patientId
 	}, "GET", cb);
 };
+
+exports.countVisitsByIyakuhincode = function(patientId, iyakuhincode, cb){
+	request("count_visits_by_iyakuhincode", {
+		patient_id: patientId,
+		iyakuhincode: iyakuhincode
+	}, "GET", cb);
+}

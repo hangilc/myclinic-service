@@ -120,6 +120,13 @@ function modifyDb(orig){
 		}
 		cb(undefined, [visitId]);
 	};
+	db.getDrug = function(conn, drugId, cb){
+		if( conn.state !== "authenticated" ){
+			cb("not authenticated");
+			return;
+		}
+		cb(undefined, [drugId]);
+	};
 	return db;
 }
 

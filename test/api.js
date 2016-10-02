@@ -67,3 +67,9 @@ exports.prescDone = function(visitId, done){
 	}, "POST", done);
 };
 
+exports.getDrug = function(drugId, cb){
+	request("get_drug", {
+		drug_id: drugId
+	}, "GET", cb);
+};
+

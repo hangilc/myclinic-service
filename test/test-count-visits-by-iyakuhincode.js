@@ -8,7 +8,7 @@ var db = require("myclinic-db");
 var moment = require("moment");
 var helper = require("./helper");
 
-describe("Testing countVisitsByIyakuhincode", function(){
+describe("Testing count_visits_by_iyakuhincode", function(){
 	it("empty", function(done){
 		var resultValue;
 		conti.exec([

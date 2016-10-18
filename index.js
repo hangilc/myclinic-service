@@ -66,4 +66,8 @@ exports.initApp = function(app, config){
 		}
 	});
 	return app;	
-}
+};
+
+exports.modifyDb = function(fn){
+	service.modifyDb(fn);
+};

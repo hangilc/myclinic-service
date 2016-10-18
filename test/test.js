@@ -23,6 +23,7 @@ before(function(done){
 		done();
 	});
 	conn = mysql.createConnection(config.dbConfig);
+	service.modifyDb(modifyDb);
 });
 
 after(function(done){
@@ -91,6 +92,42 @@ exports.request = function(service, data, method, cb){
 		req.write(body);
 	};
 	req.end();
+};
+
+function modifyDb(orig){
+	var db = {};
+	Object.keys(orig).forEach(function(key){
+		db[key] = orig[key];
+	});
+	db.listFullVisitsByIyakuhincode = function(conn, patientId, iyakuhincode, offset, n, cb){
+		if( conn.state !== "authenticated" ){
+			cb("not authenticated");
+			return;
+		}
+		cb(undefined, [patientId, iyakuhincode, offset, n]);
+	};
+	db.findPharmaDrug = function(conn, iyakuhincode, cb){
+		if( conn.state !== "authenticated" ){
+			cb("not authenticated");
+			return;
+		}
+		cb(undefined, [iyakuhincode]);
+	};
+	db.prescDone = function(conn, visitId, cb){
+		if( conn.state !== "authenticated" ){
+			cb("not authenticated");
+			return;
+		}
+		cb(undefined, [visitId]);
+	};
+	db.getDrug = function(conn, drugId, cb){
+		if( conn.state !== "authenticated" ){
+			cb("not authenticated");
+			return;
+		}
+		cb(undefined, [drugId]);
+	};
+	return db;
 }
 
 

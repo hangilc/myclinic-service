@@ -15,7 +15,7 @@ exports.initApp = function(app, config){
 		NameMap.import(config.nameMap);
 	}
 	if( config.houkatsuList ){
-		rcpt.setHoukatsuList = config.houkatsuList;
+		rcpt.setHoukatsuList(config.houkatsuList);
 	}
 	app.use("/", function(req, res){
 		app.disable("etag");

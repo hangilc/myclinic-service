@@ -4,7 +4,8 @@
   "description": "Web interface to myclinic database",
   "main": "index.js",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "build-test": "webpack test-static/main.js test-static/bundle.js"
   },
   "repository": {
     "type": "git",
@@ -21,7 +22,9 @@
     "chai": "^3.5.0",
     "express": "^4.14.0",
     "mocha": "^3.0.2",
-    "myclinic-config": "^2.2.1"
+    "myclinic-config": "^2.3.1",
+    "myclinic-service-api": "^1.0.7",
+    "webpack": "^1.13.3"
   },
   "dependencies": {
     "conti": "^1.3.2",

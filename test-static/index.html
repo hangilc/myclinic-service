@@ -12,12 +12,17 @@
 	<script src="https://cdn.rawgit.com/Automattic/expect.js/0.3.1/index.js"></script>
 	<script src="https://cdn.rawgit.com/mochajs/mocha/2.2.5/mocha.js"></script>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/chai/1.10.0/chai.min.js"></script>
+	<script src="bundle.js"></script>
 	<script>mocha.setup("bdd")</script>
-	<script src="test/test-mock.js"></script>
+	<script src="test/test-payment.js"></script>
 	<script>
-		mocha.checkLeaks();
-		mocha.globals(['jQuery']);
-		mocha.run();
+		//mocha.checkLeaks();
+		//mocha.globals(['jQuery', 'hello']);
+		mocha.run(function(failures){
+			if( failures === 0 ){
+				fetch("/cleanup");
+			}
+		});
 	</script>
 </body>
 </html>

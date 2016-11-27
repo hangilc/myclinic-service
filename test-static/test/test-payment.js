@@ -1,28 +1,35 @@
-"use strict";
-
 describe("Testing payment", function(){
 	it("list order", function(done){
-		var visitId = 1;
+		var patient = helper.mockPatient();
+		var visit = helper.mockVisit();
 		var payment1 = {
-			visit_id: visitId,
 			amount: 100,
 			paytime: "2016-11-23 21:40:00"
 		};
 		var payment2 = {
-			visit_id: visitId,
 			amount: 100,
 			paytime: "2016-11-23 21:44:00"
 		};
 		var payments;
 		conti.exec([
 			function(done){
-				service.enterPayment(payment1.visit_id, payment1.amount, payment1.paytime, done);
+				service.enterPatient(patient, done);
+			}, 
+			function(done){
+				visit.patient_id = patient.patient_id;
+				service.enterVisit(visit, done);
 			},
 			function(done){
-				service.enterPayment(payment2.visit_id, payment2.amount, payment2.paytime, done);
+				var payments = [payment1, payment2];
+				payments.forEach(function(pay){
+					pay.visit_id = visit.visit_id;
+				});
+				conti.forEach(payments, function(pay, done){
+					service.enterPayment(pay, done);
+				}, done);
 			},
 			function(done){
-				service.listPayments(visitId, function(err, result){
+				service.listPayments(visit.visit_id, function(err, result){
 					if( err ){
 						done(err);
 						return;
@@ -36,8 +43,12 @@ describe("Testing payment", function(){
 				done(err);
 				return;
 			}
-			expect(payments).eql([payment2, payment1]);
-			done();
+			try {
+				expect(payments).deep.equal([payment2, payment1]);
+				done();
+			} catch(ex){
+				done(ex);
+			}
 		});
 	});
 });

@@ -38,6 +38,7 @@ app.get("/cleanup", function(req, res){
 				console.log(err);
 			}
 			console.log("cleared tables");
+			res.send("done");
 		})
 	})
 });

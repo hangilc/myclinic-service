@@ -182,7 +182,6 @@ describe("Testing finish cashier", function(){
 				service.enterDrug(drug, done);
 			},
 			function(done){
-				console.log("enter drug done");
 				service.endExam(visitId, payment2.amount, done);
 			},
 			function(done){

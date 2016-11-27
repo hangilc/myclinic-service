@@ -33,7 +33,7 @@
     "myclinic-consts": "^1.0.0",
     "myclinic-data": "^1.0.0",
     "myclinic-db": "^0.2.14",
-    "myclinic-service-api": "^1.0.7",
+    "myclinic-service-api": "^1.0.9",
     "mysql": "^2.11.1",
     "npm": "^4.0.2"
   }

@@ -23,7 +23,7 @@
     "express": "^4.14.0",
     "mocha": "^3.0.2",
     "myclinic-config": "^2.3.1",
-    "myclinic-service-api": "file:../myclinic-service-api",
+    "myclinic-service-api": "^1.0.9",
     "webpack": "^1.13.3"
   },
   "dependencies": {
@@ -33,7 +33,6 @@
     "myclinic-consts": "^1.0.0",
     "myclinic-data": "^1.0.0",
     "myclinic-db": "^0.2.14",
-    "myclinic-service-api": "^1.0.9",
     "mysql": "^2.11.1",
     "npm": "^4.0.2"
   }

@@ -1,18 +1,33 @@
-"use strict";
-
+var path = require("path");
 var express = require("express");
 var bodyParser = require("body-parser");
-var service = require("./index");
-var config = require("./sample-config/service-config");
+var Config = require("myclinic-config");
+var Service = require("./index.js");
+var confDir = path.join(__dirname, "test-config");
+var database = Config.read(confDir, "test-database");
+var config = { 
+	"database-config": database
+};
+["master-map", "name-map", "houkatsu-list"].forEach(function(key){
+	config[key] = Config.read(confDir, key);
+});
+console.log(config);
 
 var app = express();
-var subApp = express();
-subApp.use(bodyParser.urlencoded({extended: false}));
-subApp.use(bodyParser.json());
-service.initApp(subApp, config);
-app.use("/service", subApp);
+app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.json());
+app.get("/config/:name", function(req, res){
+	var c = Config.read(confDir, "subs", req.params.name);
+	if( !c ){
+		res.set("Content-Type", "application/json");
+		res.end("{}");
+	} else {
+		res.json(c);
+	}
+});
+Service.initApp(app, config);
 
-var port = 8081;
+var port = 12000;
 app.listen(port, function(){
-	console.log("server listening to " + 8081);
+	console.log("server listening to " + port);
 })

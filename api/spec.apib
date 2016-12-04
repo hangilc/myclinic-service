@@ -1,0 +1,28 @@
+FORMAT: 1A
+
+# Myclinic API
+
+# Group マスター
+
+## 診療行為名を診療コードに変換 [POST /batch-resolve-shinryou-names-at]
+
++ names (array[string]) --- 診療行為名のリスト
++ at (string) --- 変換された診療コードが有効であるべき日付
+
++ Request (application/json)
+
+		{
+			"names": ["再診", "外来管理加算"],
+			"at": "2016-12-04"
+		}
+
++ Response 200 (application/json)
+
+		{
+			"再診": 112007410,
+			"外来管理加算": 112011010	
+		}
+
++ Response 400 (text/plain)
+
+		診療コードを見つけられませんでした: 未登録

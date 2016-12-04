@@ -15,16 +15,20 @@ var database = Config.read(confDir, program.databaseConfig);
 if( program.databaseHost ){
 	database.host = program.databaseHost
 }
-var config = {
-
+var config = { 
+	"database-config": database
 };
+["master-map", "name-map", "houkatsu-list"].forEach(function(key){
+	config[key] = Config.read(confDir, key);
+});
+console.log(config);
 
 var app = express();
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 app.get("/config/:name", function(req, res){
 	var c = Config.read(confDir, "subs", req.params.name);
-	if( !c || c === {} ){
+	if( !c ){
 		res.set("Content-Type", "application/json");
 		res.end("{}");
 	} else {

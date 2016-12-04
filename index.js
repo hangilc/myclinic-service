@@ -1,17 +1,25 @@
-"use strict";
 
-var mysql = require("mysql");
-var service = require("./lib/service");
-var noDbService = require("./lib/no-db-service");
 var MasterMap = require("./lib/master-map");
-var NameMap = require("./lib/master-name");
+var NameMap = require("./lib/name-map");
 var rcpt = require("./lib/rcpt");
+var api = require("./api");
 
 exports.initApp = function(app, config){
-
+	app.set("etag", false);
+	var dbConfig = config["database-config"];
+	if( config["master-map"] ){
+		MasterMap.import(config["master-map"]);
+	}
+	if( config["name-map"] ){
+		NameMap.import(config["name-map"]);
+	}
+	if( config["houkatsu-list"] ){
+		rcpt.setHoukatsuList(config["houkatsu-list"]);
+	}
+	api.setup(app, dbConfig);
 };
 
-
+/*
 exports.initAppOrig = function(app, config){
 	if( config.masterMap ){
 		MasterMap.import(config.masterMap);
@@ -72,3 +80,4 @@ exports.initAppOrig = function(app, config){
 	});
 	return app;	
 };
+*/

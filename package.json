@@ -21,9 +21,9 @@
     "aglio": "^2.3.0",
     "body-parser": "^1.15.2",
     "chai": "^3.5.0",
+    "content-type": "^1.0.2",
     "express": "^4.14.0",
     "mocha": "^3.0.2",
-    "myclinic-service-api": "^1.0.9",
     "webpack": "^1.13.3"
   },
   "dependencies": {

@@ -1,5 +1,6 @@
 var http = require("http");
 var Url = require("url");
+var contentType = require("content-type");
 
 function Requester(url){
 	if( typeof url === "string" ){
@@ -38,7 +39,6 @@ Requester.prototype.request = function(path, data, method, cb){
 	var req = http.request(opt, function(res){
 		res.setEncoding("utf8");
 		var chunks = [];
-		console.log(res.headers);
 		res.on("error", function(err){
 			cb(err);
 		});
@@ -46,10 +46,16 @@ Requester.prototype.request = function(path, data, method, cb){
 			chunks.push(chunk);
 		});
 		res.on("end", function(){
+			var resultChunk = chunks.join("");
 			if( res.statusCode === 200 ){
-				cb(undefined, chunks.join(""));
+				var type = contentType.parse(req).type;
+				if( type === "application/json" ){
+					cb(undefined, JSON.parse(resultChunk));
+				} else {
+					cb(undefined, resultChunk);
+				}
 			} else {
-				cb("status-code: " + res.statusCode, chunks.join(""));
+				cb("status-code: " + res.statusCode, resultChunk);
 			}
 		});
 	});

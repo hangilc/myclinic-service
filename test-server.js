@@ -13,7 +13,8 @@ exports.run = function(done){
 	var confDir = path.join(__dirname, "test-config");
 	var database = Config.read(confDir, "test-database");
 	var config = { 
-		"database-config": database
+		"database-config": database,
+		silent: true
 	};
 	["master-map", "name-map", "houkatsu-list"].forEach(function(key){
 		config[key] = Config.read(confDir, key);

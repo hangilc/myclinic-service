@@ -8,13 +8,13 @@ exports.initApp = function(app, config){
 	app.set("etag", false);
 	var dbConfig = config["database-config"];
 	if( config["master-map"] ){
-		MasterMap.import(config["master-map"]);
+		MasterMap.import(config["master-map"], { silent: config.silent} );
 	}
 	if( config["name-map"] ){
-		NameMap.import(config["name-map"]);
+		NameMap.import(config["name-map"], { silent: config.silent} );
 	}
 	if( config["houkatsu-list"] ){
-		rcpt.setHoukatsuList(config["houkatsu-list"]);
+		rcpt.setHoukatsuList(config["houkatsu-list"], { silent: config.silent} );
 	}
 	api.setup(app, dbConfig);
 };

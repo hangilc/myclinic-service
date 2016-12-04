@@ -11,8 +11,7 @@ describe("Testing /batch-resolve-shinryou-names-at", function(){
 				done(err);
 				return;
 			}
-			console.log(result);
-			expect(result).eql({
+			expect(result).deep.equal({
 				"再診": 112007410,
 				"外来管理加算": 112011010
 			});

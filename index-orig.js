@@ -8,11 +8,6 @@ var NameMap = require("./lib/master-name");
 var rcpt = require("./lib/rcpt");
 
 exports.initApp = function(app, config){
-
-};
-
-
-exports.initAppOrig = function(app, config){
 	if( config.masterMap ){
 		MasterMap.import(config.masterMap);
 	}
@@ -71,4 +66,8 @@ exports.initAppOrig = function(app, config){
 		}
 	});
 	return app;	
+};
+
+exports.modifyDb = function(fn){
+	service.modifyDb(fn);
 };

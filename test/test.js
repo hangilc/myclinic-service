@@ -82,7 +82,11 @@ exports.request = function(service, data, method, cb){
 				msg += chunk;
 			});
 			res.on("end", function(){
-				cb(undefined, JSON.parse(msg));
+				if( res.statusCode === 200 ){
+					cb(undefined, JSON.parse(msg));
+				} else {
+					cb("status-code: " + res.statusCode + " " + msg);
+				}
 			});
 	});
 	req.on("error", function(err){

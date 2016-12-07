@@ -20,6 +20,7 @@
   "devDependencies": {
     "body-parser": "^1.15.2",
     "chai": "^3.5.0",
+    "content-type": "^1.0.2",
     "express": "^4.14.0",
     "mocha": "^3.0.2",
     "myclinic-config": "^2.3.1",
@@ -32,7 +33,7 @@
     "moment": "^2.14.1",
     "myclinic-consts": "^1.0.0",
     "myclinic-data": "^1.0.0",
-    "myclinic-db": "^0.2.14",
+    "myclinic-db": "^0.2.19",
     "mysql": "^2.11.1",
     "npm": "^4.0.2"
   }

@@ -58,3 +58,58 @@ describe("Testing update-shahokokuho", function(){
 		});
 	});
 });
+
+describe("Testing delete_shahokokuho", function(){
+	it("simple", function(done){
+		var shahokokuho = {
+			patient_id: 123,
+			hokensha_bangou: 123456,
+			hihokensha_kigou: "hihokensha_kigou(1)",
+			hihokensha_bangou: "hihokensha_bangou(1)",
+			honnin: 1,
+			kourei: 0,
+			valid_from: "2015-02-01",
+			valid_upto: "0000-00-00"
+		};
+		var found;
+		conti.exec([
+			function(done){
+				test.request("enter_shahokokuho", shahokokuho, "POST", function(err, result){
+					if( err ){
+						done(err);
+						return;
+					}
+					shahokokuho.shahokokuho_id = result;
+					done();
+				});
+			},
+			function(done){
+				var data = { shahokokuho_id: shahokokuho.shahokokuho_id };
+				test.request("delete_shahokokuho", data, "POST", done);
+			},
+			function(done){
+				var data = { shahokokuho_id: shahokokuho.shahokokuho_id };
+				test.request("find_shahokokuho", data, "GET", function(err, result){
+					if( err ){
+						done(err);
+						return;
+					}
+					found = result;
+					done();
+				});
+			}
+		], function(err){
+			if( err ){
+				done(err);
+				return;	
+			}
+			try {
+				console.log("FOUND", found);
+				done();
+			} catch(ex){
+				done(ex);
+			}
+		});
+	});
+});
+

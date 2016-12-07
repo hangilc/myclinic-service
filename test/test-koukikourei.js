@@ -4,37 +4,35 @@ var conti = require("conti");
 var service = require("../index");
 var moment = require("moment");
 
-describe("Testing update-shahokokuho", function(){
+describe("Testing update-koukikourei", function(){
 	it("simple", function(done){
-		var shahokokuho = {
+		var koukikourei = {
 			patient_id: 123,
-			hokensha_bangou: 123456,
-			hihokensha_kigou: "hihokensha_kigou(1)",
+			hokensha_bangou: "123456",
 			hihokensha_bangou: "hihokensha_bangou(1)",
-			honnin: 1,
-			kourei: 0,
+			futan_wari: 3,
 			valid_from: "2015-02-01",
 			valid_upto: "0000-00-00"
 		};
 		var updated;
 		conti.exec([
 			function(done){
-				test.request("enter_shahokokuho", shahokokuho, "POST", function(err, result){
+				test.request("enter_koukikourei", koukikourei, "POST", function(err, result){
 					if( err ){
 						done(err);
 						return;
 					}
-					shahokokuho.shahokokuho_id = result;
+					koukikourei.koukikourei_id = result;
 					done();
 				});
 			},
 			function(done){
-				shahokokuho.valid_upto = "2016-01-31";
-				test.request("update_shahokokuho", shahokokuho, "POST", done);
+				koukikourei.valid_upto = "2016-01-31";
+				test.request("update_koukikourei", koukikourei, "POST", done);
 			}, 
 			function(done){
-				var data = {shahokokuho_id: shahokokuho.shahokokuho_id};
-				test.request("get_shahokokuho", data, "GET", function(err, result){
+				var data = {koukikourei_id: koukikourei.koukikourei_id};
+				test.request("get_koukikourei", data, "GET", function(err, result){
 					if( err ){
 						done(err);
 						return;
@@ -49,7 +47,7 @@ describe("Testing update-shahokokuho", function(){
 				return;
 			}
 			try {
-				expect(updated).deep.equal(shahokokuho);
+				expect(updated).deep.equal(koukikourei);
 				done();
 			} catch(ex){
 				done(ex);
@@ -58,37 +56,35 @@ describe("Testing update-shahokokuho", function(){
 	});
 });
 
-describe("Testing delete_shahokokuho", function(){
+describe("Testing delete_koukikourei", function(){
 	it("simple", function(done){
-		var shahokokuho = {
+		var koukikourei = {
 			patient_id: 123,
-			hokensha_bangou: 123456,
-			hihokensha_kigou: "hihokensha_kigou(1)",
+			hokensha_bangou: "123456",
 			hihokensha_bangou: "hihokensha_bangou(1)",
-			honnin: 1,
-			kourei: 0,
+			futan_wari: 3,
 			valid_from: "2015-02-01",
 			valid_upto: "0000-00-00"
 		};
 		var found;
 		conti.exec([
 			function(done){
-				test.request("enter_shahokokuho", shahokokuho, "POST", function(err, result){
+				test.request("enter_koukikourei", koukikourei, "POST", function(err, result){
 					if( err ){
 						done(err);
 						return;
 					}
-					shahokokuho.shahokokuho_id = result;
+					koukikourei.koukikourei_id = result;
 					done();
 				});
 			},
 			function(done){
-				var data = { shahokokuho_id: shahokokuho.shahokokuho_id };
-				test.request("delete_shahokokuho", data, "POST", done);
+				var data = { koukikourei_id: koukikourei.koukikourei_id };
+				test.request("delete_koukikourei", data, "POST", done);
 			},
 			function(done){
-				var data = { shahokokuho_id: shahokokuho.shahokokuho_id };
-				test.request("find_shahokokuho", data, "GET", function(err, result){
+				var data = { koukikourei_id: koukikourei.koukikourei_id };
+				test.request("find_koukikourei", data, "GET", function(err, result){
 					if( err ){
 						done(err);
 						return;

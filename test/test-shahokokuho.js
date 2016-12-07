@@ -103,6 +103,7 @@ describe("Testing delete_shahokokuho", function(){
 				return;	
 			}
 			try {
+				expect(found).null;
 				done();
 			} catch(ex){
 				done(ex);

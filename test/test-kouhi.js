@@ -93,6 +93,7 @@ describe("Testing delete_kouhi", function(){
 			}
 		], function(err){
 			if( err ){
+				expect(found).null;
 				done(err);
 				return;	
 			}

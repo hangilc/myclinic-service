@@ -99,6 +99,7 @@ describe("Testing delete_koukikourei", function(){
 				return;	
 			}
 			try {
+				expect(found).null;
 				done();
 			} catch(ex){
 				done(ex);

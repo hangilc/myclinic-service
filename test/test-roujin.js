@@ -99,6 +99,7 @@ describe("Testing delete_roujin", function(){
 				return;	
 			}
 			try {
+				expect(found).null;
 				done();
 			} catch(ex){
 				done(ex);

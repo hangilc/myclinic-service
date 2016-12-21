@@ -64,6 +64,7 @@ describe("Testing finish cashier", function(){
 	it("two payments", function(done){
 		var patient = helper.mockPatient();
 		var visitId;
+		var at = moment().format("YYYY-MM-DD HH:mm:ss");
 		var payment1 = {
 			amount: 1000,
 			paytime: "2016-11-27 17:40:23"
@@ -78,7 +79,7 @@ describe("Testing finish cashier", function(){
 				service.insertPatient(patient, done);
 			},
 			function(done){
-				service.startVisit(patient.patient_id, "2016-11-27 17:35:12", function(err, result){
+				service.startVisit(patient.patient_id, at, function(err, result){
 					if( err ){
 						done(err);
 						return;
@@ -142,6 +143,7 @@ describe("Testing finish cashier", function(){
 	it("two payments with drug", function(done){
 		var patient = helper.mockPatient();
 		var visitId;
+		var at = moment().format("YYYY-MM-DD HH:mm:ss");
 		var payment1 = {
 			amount: 1000,
 			paytime: "2016-11-27 17:40:23"
@@ -157,7 +159,7 @@ describe("Testing finish cashier", function(){
 				service.insertPatient(patient, done);
 			},
 			function(done){
-				service.startVisit(patient.patient_id, "2016-11-27 17:35:12", function(err, result){
+				service.startVisit(patient.patient_id, at, function(err, result){
 					if( err ){
 						done(err);
 						return;

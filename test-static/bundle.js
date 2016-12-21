@@ -96,7 +96,7 @@
 		url += "?" + searchParams.toString();
 		conti.fetchJson(url, opt, function(err, result){
 			if( timer ){
-				clearTimeout()
+				clearTimeout(timer)
 			}
 			if( !done ){
 				done = true;
@@ -104,28 +104,6 @@
 			}
 		});
 	}
-
-	// function request(service, data, method, cb){
-	// 	data = data || {};
-	// 	method = method || "GET";
-	// 	var config = {
-	// 		url: "./service?_q=" + service,
-	//         type: method,
-	// 		data: data,
-	// 		dataType: "json",
-	// 		success: function(list){
-	// 			cb(undefined, list);
-	// 		},
-	// 		error: function(xhr, err, errThrown){
-	// 			cb("ERROR: " + (xhr.responseText || err || errThrown));
-	// 		},
-	// 		timeout: 10000
-	// 	};
-	// 	if( method === "POST" && typeof data === "string" ){
-	// 		config.contentType = "application/json";
-	// 	}
-	// 	$.ajax(config);
-	// }
 
 	exports.recentVisits = function(cb){
 		request("recent_visits", "", "GET", cb);
@@ -598,6 +576,149 @@
 	};
 
 	exports.insertPharmaQueue = exports.enterPharmaQueue;
+
+	// reception //////////////////////////////////////////////////////
+
+	exports.listFullWqueue = function(cb){
+		request("list_full_wqueue", {}, "GET", cb);
+	};
+
+	exports.updatePatient = function(patient){
+		request("update_patient", patient, "POST", done);
+	};
+
+	exports.getShahokokuho = function(shahokokuhoId, cb){
+		request("get_shahokokuho", { shahokokuho_id: shahokokuhoId }, "GET", cb);
+	};
+
+	exports.findShahokokuho = function(shahokokuhoId, cb){
+		request("find_shahokokuho", { shahokokuho_id: shahokokuhoId }, "GET", cb);
+	};
+
+	exports.updateShahokokuho = function(shahokokuho, done){
+		request("update_shahokokuho", shahokokuho, "POST", done);
+	};
+
+	exports.deleteShahokokuho = function(shahokokuhoId, done){
+		request("delete_shahokokuho", { shahokokuho_id: shahokokuhoId }, "POST", done);
+	};
+
+	exports.enterShahokokuho = function(shahokokuho, done){
+		request("enter_shahokokuho", shahokokuho, "POST", function(err, result){
+			if( err ){
+				done(err);
+				return;
+			}
+			shahokokuho.shahokokuho_id = result;
+			done();
+		});
+	};
+
+	exports.listShahokokuho = function(patientId, cb){
+		request("list_shahokokuho", { patient_id: patientId }, "GET", cb);
+	};
+
+	exports.getKoukikourei = function(koukikoureiId, cb){
+		request("get_koukikourei", { koukikourei_id: koukikoureiId }, "GET", cb);
+	};
+
+	exports.findKoukikourei = function(koukikoureiId, cb){
+		request("find_koukikourei", { koukikourei_id: koukikoureiId }, "GET", cb);
+	};
+
+	exports.updateKoukikourei = function(koukikourei, done){
+		request("update_koukikourei", koukikourei, "POST", done);
+	};
+
+	exports.deleteKoukikourei = function(koukikoureiId, done){
+		request("delete_koukikourei", { koukikourei_id: koukikoureiId }, "POST", done);
+	};
+
+	exports.enterKoukikourei = function(koukikourei, done){
+		request("enter_koukikourei", koukikourei, "POST", function(err, result){
+			if( err ){
+				done(err);
+				return;
+			}
+			koukikourei.koukikourei_id = result;
+			done();
+		});
+	};
+
+	exports.listKoukikourei = function(patientId, cb){
+		request("list_koukikourei", { patient_id: patientId }, "GET", cb);
+	};
+
+	exports.getRoujin = function(roujinId, cb){
+		request("get_roujin", { roujin_id: roujinId }, "GET", cb);
+	};
+
+	exports.findRoujin = function(roujinId, cb){
+		request("find_roujin", { roujin_id: roujinId }, "GET", cb);
+	};
+
+	exports.updateRoujin = function(roujin, done){
+		request("update_roujin", roujin, "POST", done);
+	};
+
+	exports.deleteRoujin = function(roujinId, done){
+		request("delete_roujin", { roujin_id: roujinId }, "POST", done);
+	};
+
+	exports.enterRoujin = function(roujin, done){
+		request("enter_roujin", roujin, "POST", function(err, result){
+			if( err ){
+				done(err);
+				return;
+			}
+			roujin.roujin_id = result;
+			done();
+		});
+	};
+
+	exports.listRoujin = function(patientId, cb){
+		request("list_roujin", { patient_id: patientId }, "GET", cb);
+	};
+
+	exports.getKouhi = function(kouhiId, cb){
+		request("get_kouhi", { kouhi_id: kouhiId }, "GET", cb);
+	};
+
+	exports.findKouhi = function(kouhiId, cb){
+		request("find_kouhi", { kouhi_id: kouhiId }, "GET", cb);
+	};
+
+	exports.updateKouhi = function(kouhi, done){
+		request("update_kouhi", kouhi, "POST", done);
+	};
+
+	exports.deleteKouhi = function(kouhiId, done){
+		request("delete_kouhi", { kouhi_id: kouhiId }, "POST", done);
+	};
+
+	exports.enterKouhi = function(kouhi, done){
+		request("enter_kouhi", kouhi, "POST", function(err, result){
+			if( err ){
+				done(err);
+				return;
+			}
+			kouhi.kouhi_id = result;
+			done();
+		});
+	};
+
+	exports.listKouhi = function(patientId, cb){
+		request("list_kouhi", { patient_id: patientId }, "GET", cb);
+	};
+
+	exports.listRecentlyEnteredPatients = function(n, cb){
+		request("list_recently_entered_patients", {n : n}, "GET", cb);
+	};
+
+	exports.deletePatient = function(patientId, done){
+		request("delete_patient", { patient_id: patientId }, "POST", done);
+	};
+
 
 
 /***/ },
@@ -1176,14 +1297,29 @@
 	}
 
 	exports.fetchJson = function (url, opt, cb){
-		exports.fetch(url, opt, "json", cb);
+		exports.fetch(url, opt, "json", function(err, result){
+			setTimeout(function(){
+				cb(err, result);
+			}, 0);
+	//		setImmediate(function(){
+	//			cb(err, result);
+	//		});
+		});
 	}
 
 	exports.fetchText = function (url, opt, cb){
-		exports.fetch(url, opt, "text", cb);
+		exports.fetch(url, opt, "text", function(err, result){
+			setTimeout(function(){
+				cb(err, result);
+			}, 0);
+	//		setImmediate(function(){
+	//			cb(err, result);
+	//		});
+		});
 	}
 
 	})( true ? exports : (window.conti = {}));
+
 
 /***/ },
 /* 5 */
@@ -15373,20 +15509,23 @@
 
 	var gMockIndex = 1;
 
-	exports.getMockIndex = function(){
+	function getMockIndex(){
 		return gMockIndex++;
-	};
+	}
+
+	exports.getMockIndex = getMockIndex;
 
 	exports.mockPatient = function(obj){
+		var mockId = getMockIndex();
 		var mock = {
-			last_name: "last_name_" + gMockIndex++,
-			first_name: "first_name_" + gMockIndex++,
-			last_name_yomi: "last_name_yomi_" + gMockIndex++,
-			first_name_yomi: "first_name_yomi_" + gMockIndex++,
+			last_name: "last_name_" + mockId,
+			first_name: "first_name_" + mockId,
+			last_name_yomi: "last_name_yomi_" + mockId,
+			first_name_yomi: "first_name_yomi_" + mockId,
 			birth_day: "2006-03-12",
 			sex: "M",
-			address: "address_" + gMockIndex++,
-			phone: "phone_" + gMockIndex++
+			address: "address_" + mockId,
+			phone: "phone_" + mockId
 		};
 		if( obj ){
 			Object.keys(obj).forEach(function(key){
@@ -15433,6 +15572,77 @@
 		}
 		return mock;
 	};
+
+	exports.mockShahokokuho = function(obj){
+		var mockId = getMockIndex();
+		var mock = {
+			hokensha_bangou: 1234,
+			hihokensha_kigou: "hihokensha_kigou_" + mockId,
+			hihokensha_bangou: "hihokensha_bangou_" + mockId,
+			honnin: 0,
+			valid_from: "2016-12-01",
+			valid_upto: "0000-00-00",
+			kourei: 0
+		};
+		if( obj ){
+			Object.keys(obj).forEach(function(key){
+				mock[key] = obj[key];
+			});
+		}
+		return mock;
+	};
+
+	exports.mockKoukikourei = function(obj){
+		var mockId = getMockIndex();
+		var mock = {
+			hokensha_bangou: "hokensha_bangou_" + mockId,
+			hihokensha_bangou: "hihokensha_bangou_" + mockId,
+			futan_wari: 1,
+			valid_from: "2016-12-01",
+			valid_upto: "0000-00-00"
+		};
+		if( obj ){
+			Object.keys(obj).forEach(function(key){
+				mock[key] = obj[key];
+			});
+		}
+		return mock;
+	};
+
+	exports.mockRoujin = function(obj){
+		var mockId = getMockIndex();
+		var mock = {
+			shichouson: 123,
+			jukyuusha: 456,
+			futan_wari: 1,
+			valid_from: "2016-12-01",
+			valid_upto: "0000-00-00"
+		};
+		if( obj ){
+			Object.keys(obj).forEach(function(key){
+				mock[key] = obj[key];
+			});
+		}
+		return mock;
+	};
+
+	exports.mockKouhi = function(obj){
+		var mockId = getMockIndex();
+		var mock = {
+			futansha: 123,
+			jukyuusha: 456,
+			valid_from: "2016-12-01",
+			valid_upto: "0000-00-00"
+		};
+		if( obj ){
+			Object.keys(obj).forEach(function(key){
+				mock[key] = obj[key];
+			});
+		}
+		return mock;
+	};
+
+
 
 
 /***/ }

@@ -1,19 +1,22 @@
 var gMockIndex = 1;
 
-exports.getMockIndex = function(){
+function getMockIndex(){
 	return gMockIndex++;
-};
+}
+
+exports.getMockIndex = getMockIndex;
 
 exports.mockPatient = function(obj){
+	var mockId = getMockIndex();
 	var mock = {
-		last_name: "last_name_" + gMockIndex++,
-		first_name: "first_name_" + gMockIndex++,
-		last_name_yomi: "last_name_yomi_" + gMockIndex++,
-		first_name_yomi: "first_name_yomi_" + gMockIndex++,
+		last_name: "last_name_" + mockId,
+		first_name: "first_name_" + mockId,
+		last_name_yomi: "last_name_yomi_" + mockId,
+		first_name_yomi: "first_name_yomi_" + mockId,
 		birth_day: "2006-03-12",
 		sex: "M",
-		address: "address_" + gMockIndex++,
-		phone: "phone_" + gMockIndex++
+		address: "address_" + mockId,
+		phone: "phone_" + mockId
 	};
 	if( obj ){
 		Object.keys(obj).forEach(function(key){
@@ -60,3 +63,74 @@ exports.mockDrug = function(obj){
 	}
 	return mock;
 };
+
+exports.mockShahokokuho = function(obj){
+	var mockId = getMockIndex();
+	var mock = {
+		hokensha_bangou: 1234,
+		hihokensha_kigou: "hihokensha_kigou_" + mockId,
+		hihokensha_bangou: "hihokensha_bangou_" + mockId,
+		honnin: 0,
+		valid_from: "2016-12-01",
+		valid_upto: "0000-00-00",
+		kourei: 0
+	};
+	if( obj ){
+		Object.keys(obj).forEach(function(key){
+			mock[key] = obj[key];
+		});
+	}
+	return mock;
+};
+
+exports.mockKoukikourei = function(obj){
+	var mockId = getMockIndex();
+	var mock = {
+		hokensha_bangou: "hokensha_bangou_" + mockId,
+		hihokensha_bangou: "hihokensha_bangou_" + mockId,
+		futan_wari: 1,
+		valid_from: "2016-12-01",
+		valid_upto: "0000-00-00"
+	};
+	if( obj ){
+		Object.keys(obj).forEach(function(key){
+			mock[key] = obj[key];
+		});
+	}
+	return mock;
+};
+
+exports.mockRoujin = function(obj){
+	var mockId = getMockIndex();
+	var mock = {
+		shichouson: 123,
+		jukyuusha: 456,
+		futan_wari: 1,
+		valid_from: "2016-12-01",
+		valid_upto: "0000-00-00"
+	};
+	if( obj ){
+		Object.keys(obj).forEach(function(key){
+			mock[key] = obj[key];
+		});
+	}
+	return mock;
+};
+
+exports.mockKouhi = function(obj){
+	var mockId = getMockIndex();
+	var mock = {
+		futansha: 123,
+		jukyuusha: 456,
+		valid_from: "2016-12-01",
+		valid_upto: "0000-00-00"
+	};
+	if( obj ){
+		Object.keys(obj).forEach(function(key){
+			mock[key] = obj[key];
+		});
+	}
+	return mock;
+};
+
+

@@ -1,13 +1,14 @@
 "use strict";
 
-var mysql = require("mysql");
 var service = require("./lib/service");
 var noDbService = require("./lib/no-db-service");
 var MasterMap = require("./lib/master-map");
 var NameMap = require("./lib/master-name");
 var rcpt = require("./lib/rcpt");
+var database = require("./lib/database");
 
 exports.initApp = function(app, config){
+	database.init(config.dbConfig);
 	if( config.masterMap ){
 		MasterMap.import(config.masterMap);
 	}
@@ -30,35 +31,42 @@ exports.initApp = function(app, config){
 				}
 			});
 		} else if( q in service ){
-			var conn = mysql.createConnection(config.dbConfig);
-			conn.beginTransaction(function(err){
+			database.getConnection(function(err, conn){
 				if( err ){
 					console.log(err);
-					res.status(500).send("cannot start transaction");
+					res.send(500).send("cannot connect to database");
 					return;
 				}
-				service[q](conn, req, res, function(err, result){
+				conn.beginTransaction(function(err){
 					if( err ){
 						console.log(err);
-						conn.rollback(function(rollbackErr){
-							res.status(500).send(rollbackErr || err);
-							conn.end();
-						});
-					} else {
-						conn.commit(function(err){
-							if( err ){
-								console.log(err);
-								console.log(err.stack);
-								res.status(500).send(err);
-							} else {
-								if( result === undefined ){
-									result = "ok";
-								}
-								res.json(result);
-							}
-							conn.end();
-						})
+						res.status(500).send("cannot start transaction");
+						database.disposeConnection(conn);
+						return;
 					}
+					service[q](conn, req, res, function(err, result){
+						if( err ){
+							console.log(err);
+							conn.rollback(function(rollbackErr){
+								res.status(500).send(rollbackErr || err);
+								database.disposeConnection(conn);
+							});
+						} else {
+							conn.commit(function(err){
+								if( err ){
+									console.log(err);
+									console.log(err.stack);
+									res.status(500).send(err);
+								} else {
+									if( result === undefined ){
+										result = "ok";
+									}
+									res.json(result);
+								}
+								database.disposeConnection(conn);
+							})
+						}
+					});
 				});
 			});
 		} else {

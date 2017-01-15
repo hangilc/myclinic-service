@@ -1,6 +1,7 @@
 "use strict";
 
 var service = require("./lib/service");
+var intraClinic = require("./lib/intra-clinic");
 var noDbService = require("./lib/no-db-service");
 var MasterMap = require("./lib/master-map");
 var NameMap = require("./lib/master-name");
@@ -64,6 +65,45 @@ exports.initApp = function(app, config){
 									res.json(result);
 								}
 								database.disposeConnection(conn);
+							})
+						}
+					});
+				});
+			});
+		} else if( q in intraClinic ){
+			database.getIntraClinicConnection(function(err, conn){
+				if( err ){
+					console.log(err);
+					res.send(500).send("cannot connect to database");
+					return;
+				}
+				conn.beginTransaction(function(err){
+					if( err ){
+						console.log(err);
+						res.status(500).send("cannot start transaction");
+						database.disposeIntraClinicConnection(conn);
+						return;
+					}
+					intraClinic[q](conn, req, res, function(err, result){
+						if( err ){
+							console.log(err);
+							conn.rollback(function(rollbackErr){
+								res.status(500).send(rollbackErr || err);
+								database.disposeIntraClinicConnection(conn);
+							});
+						} else {
+							conn.commit(function(err){
+								if( err ){
+									console.log(err);
+									console.log(err.stack);
+									res.status(500).send(err);
+								} else {
+									if( result === undefined ){
+										result = "ok";
+									}
+									res.json(result);
+								}
+								database.disposeIntraClinicConnection(conn);
 							})
 						}
 					});

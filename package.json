@@ -33,7 +33,7 @@
     "moment": "^2.14.1",
     "myclinic-consts": "^1.0.0",
     "myclinic-data": "^1.0.0",
-    "myclinic-db": "^0.2.23",
+    "myclinic-db": "^0.2.24",
     "mysql": "^2.11.1",
     "npm": "^4.0.2"
   }
